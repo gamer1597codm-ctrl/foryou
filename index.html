@@ -8,32 +8,36 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-body{
+html, body {
   margin:0;
-  height:100vh;
+  height:100%;
+  width:100%;
   display:flex;
   justify-content:center;
   align-items:center;
   background:#f0f4f8;
   font-family:'Poppins',sans-serif;
+  overflow:hidden;
 }
 
-/* 9:16 frame */
+/* 9:16 full screen frame */
 .frame{
-  width:360px;
-  height:640px;
+  width:100vw;
+  height:100vh;
+  max-width:360px; /* keeps mobile ratio */
+  max-height:640px;
   background:linear-gradient(180deg,#fefefe,#f0f4f8);
-  border-radius:22px;
+  border-radius:0px;
   position:relative;
   overflow:hidden;
-  box-shadow:0 12px 35px rgba(0,0,0,.2);
 }
 
 .center{
   position:absolute;
   top:50%;
-  transform:translateY(-50%);
-  width:100%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:90%;
   text-align:center;
   padding:24px;
   box-sizing:border-box;
@@ -41,7 +45,7 @@ body{
 
 .hidden{display:none}
 
-/* intro */
+/* Intro */
 .intro-text{
   font-size:22px;
   font-weight:600;
@@ -64,7 +68,7 @@ body{
 
 @keyframes load{to{width:100%}}
 
-/* notes */
+/* Notes */
 .note{
   background:#ffffff;
   padding:24px;
@@ -81,14 +85,14 @@ body{
   font-size:19px;
 }
 
-/* arrow */
+/* Arrow */
 .arrow{
-  width:58px;
-  height:58px;
+  width:60px;
+  height:60px;
   border-radius:50%;
   background:linear-gradient(135deg,#4CAF50,#6fdc7a);
   color:#fff;
-  font-size:26px;
+  font-size:28px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -97,7 +101,7 @@ body{
   box-shadow:0 6px 16px rgba(76,175,80,.4);
 }
 
-/* pop */
+/* Pop animation */
 .pop{
   position:absolute;
   font-size:24px;
@@ -126,7 +130,7 @@ body{
 
 <div class="frame">
 
-<!-- intro -->
+<!-- Intro -->
 <div id="intro" class="center">
   <div class="intro-text">👋 Heyy, I have something for you ✨</div>
   <div class="loading-bg">
@@ -134,7 +138,7 @@ body{
   </div>
 </div>
 
-<!-- main -->
+<!-- Main -->
 <div id="main" class="center hidden">
   <div id="note" class="note">
     💖 Take care of yourself! You matter more than you know, and your feelings are precious 🌸
@@ -163,9 +167,10 @@ function pop(icon){
   p.className="pop";
   p.textContent=icon;
 
-  // Random position
-  p.style.left=Math.random()*280+40+"px";
-  p.style.top=Math.random()*500+40+"px";
+  // Random position within frame
+  const frameRect = frame.getBoundingClientRect();
+  p.style.left=Math.random()*(frameRect.width-40)+"px";
+  p.style.top=Math.random()*(frameRect.height-40)+"px";
   p.style.setProperty("--x",(Math.random()-0.5)*160+"px");
   p.style.setProperty("--y",(Math.random()-0.5)*160+"px");
 
@@ -192,3 +197,5 @@ function next(){
 
 </body>
 </html>
+
+
