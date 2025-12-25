@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Caring Note 🍍</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#f0f4f8;
+  font-family:'Poppins',sans-serif;
+}
+
+/* 9:16 frame */
+.frame{
+  width:360px;
+  height:640px;
+  background:linear-gradient(180deg,#fefefe,#f0f4f8);
+  border-radius:22px;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 12px 35px rgba(0,0,0,.2);
+}
+
+.center{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  width:100%;
+  text-align:center;
+  padding:24px;
+  box-sizing:border-box;
+}
+
+.hidden{display:none}
+
+/* intro */
+.intro-text{
+  font-size:22px;
+  font-weight:600;
+  margin-bottom:20px;
+}
+
+.loading-bg{
+  height:8px;
+  background:#d6dbe4;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.loading-bar{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#4CAF50,#7ddc85);
+  animation:load 5s linear forwards;
+}
+
+@keyframes load{to{width:100%}}
+
+/* notes */
+.note{
+  background:#ffffff;
+  padding:24px;
+  border-radius:20px;
+  font-size:18px;
+  line-height:1.6;
+  box-shadow:0 6px 18px rgba(0,0,0,.12);
+  margin-bottom:26px;
+  transition:opacity 2s ease;
+}
+
+.final{
+  background:linear-gradient(135deg,#fff7fc,#f4ffe8);
+  font-size:19px;
+}
+
+/* arrow */
+.arrow{
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#4CAF50,#6fdc7a);
+  color:#fff;
+  font-size:26px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:auto;
+  cursor:pointer;
+  box-shadow:0 6px 16px rgba(76,175,80,.4);
+}
+
+/* pop */
+.pop{
+  position:absolute;
+  font-size:24px;
+  animation:pop 2s forwards;
+  pointer-events:none;
+}
+
+@keyframes pop{
+  from{opacity:1;transform:scale(1)}
+  to{opacity:0;transform:translate(var(--x),var(--y)) scale(1.6)}
+}
+
+.signature{
+  margin-top:14px;
+  font-weight:600;
+  color:#4CAF50;
+}
+
+.end{
+  font-size:13px;
+  color:#888;
+}
+</style>
+</head>
+<body>
+
+<div class="frame">
+
+<!-- intro -->
+<div id="intro" class="center">
+  <div class="intro-text">👋 Heyy, I have something for you ✨</div>
+  <div class="loading-bg">
+    <div class="loading-bar"></div>
+  </div>
+</div>
+
+<!-- main -->
+<div id="main" class="center hidden">
+  <div id="note" class="note">
+    💖 Take care of yourself! You matter more than you know, and your feelings are precious 🌸
+  </div>
+  <div id="arrow" class="arrow" onclick="next()">➜</div>
+</div>
+
+</div>
+
+<script>
+let step=0;
+const note=document.getElementById("note");
+const arrow=document.getElementById("arrow");
+const frame=document.querySelector(".frame");
+const intro=document.getElementById("intro");
+const main=document.getElementById("main");
+
+setTimeout(()=>{
+  intro.classList.add("hidden");
+  main.classList.remove("hidden");
+  pop("💖");
+},5000);
+
+function pop(icon){
+  const p=document.createElement("div");
+  p.className="pop";
+  p.textContent=icon;
+
+  // Random position
+  p.style.left=Math.random()*280+40+"px";
+  p.style.top=Math.random()*500+40+"px";
+  p.style.setProperty("--x",(Math.random()-0.5)*160+"px");
+  p.style.setProperty("--y",(Math.random()-0.5)*160+"px");
+
+  frame.appendChild(p);
+  setTimeout(()=>p.remove(),2000);
+}
+
+function next(){
+  if(step===0){
+    // Apology / Support Note
+    note.innerHTML="🤍 Feeling low? You’re never alone. I’m here to listen, support, and bring a little sunshine to your day 🌟";
+    pop("⭐");
+    step++;
+  } else if(step===1){
+    // Final Cute Note
+    arrow.style.display="none";
+    note.classList.add("final");
+    note.innerHTML="🌸 Sending warmth, care, and a gentle smile just for you 💛<div class='signature'>for pineapple</div><div class='end'>end…</div>";
+    setTimeout(()=>{ note.style.opacity="0"; },60000);
+    step++;
+  }
+}
+</script>
+
+</body>
+</html>
